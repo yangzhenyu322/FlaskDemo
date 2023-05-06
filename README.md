@@ -1,4 +1,5 @@
 # FlaskDemo
+学习资源：[Flask 入门教程](https://tutorial.helloflask.com/)
 这是一个Flask Demo项目
 ## 1、准备工作
 ## 2、Hello, Flask!
