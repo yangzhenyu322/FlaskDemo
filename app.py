@@ -130,16 +130,6 @@ def logout():
     flash('Goodbye.')
     return redirect(url_for('index'))  # 重定向回首页
 
-# 视图保护
-# @app.route('/movie/delete/<int:movie_id>', methods=['POST'])
-# @login_required  # 登录保护
-# def delete(movie_id):
-#     movie = Movie.query.get_or_404(movie_id)
-#     db.session.delete(movie)
-#     db.session.commit()
-#     flash('Item deleted.')
-#     return redirect(url_for('index'))
-
 # 支持设置用户名
 @app.route('/settings', methods=['GET', 'POST'])
 @login_required
@@ -221,13 +211,16 @@ def edit(movie_id):
 
     return render_template('edit.html', movie=movie)  # 传入被编辑的电影记录
 
-@app.route('/movie/delete/<int:movie_id>', methods=['POST'])  # 限定只接受 POST 请求
+# 视图保护
+@app.route('/movie/delete/<int:movie_id>', methods=['POST'])
+@login_required  # 登录保护
 def delete(movie_id):
-    movie = Movie.query.get_or_404(movie_id)  # 获取电影记录
-    db.session.delete(movie)  # 删除对应的记录
-    db.session.commit()  # 提交数据库会话
+    movie = Movie.query.get_or_404(movie_id)
+    db.session.delete(movie)
+    db.session.commit()
     flash('Item deleted.')
-    return redirect(url_for('index'))  # 重定向回主页
+    return redirect(url_for('index'))
+
 
 @app.errorhandler(404)  # 传入要处理的错误代码
 def page_not_found(e):  # 接受异常对象作为参数
